@@ -1,7 +1,7 @@
 
 :root {
-    --bg-dark: #0a0a0a;
-    --card-dark: #1a1a1a;
+    --bg-dark: #1b1b1b;
+    --card-dark: #3e3d3d;
     --primary: #4a9bff;
     --primary-dark: #2a6fc9;
     --secondary: #ff7043;
@@ -35,7 +35,7 @@ body {
     padding: 0 15px;
 }
 
-header {
+ header {
     text-align: center;
     margin-bottom: 30px;
     padding-bottom: 20px;
@@ -439,4 +439,10 @@ tr:hover {
     .dashboard {
         grid-template-columns: 1fr;
     }
+}
+
+
+.accordion-container{
+    display: grid;
+    grid-template-columns: repeat(4,1fr);
 }

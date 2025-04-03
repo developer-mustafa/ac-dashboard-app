@@ -1,225 +1,303 @@
 <!DOCTYPE html>
 <html lang="bn">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>এসি পারফরম্যান্স বিশ্লেষক</title>
-    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&display=swap" rel="stylesheet">
-   <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-</head>
-<body>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+  </head>
+  <body>
     <div class="container">
-        <header>
-            <h1>এসি পারফরম্যান্স বিশ্লেষক</h1>
-            <p class="subtitle">আপনার এসির কর্মক্ষমতা মূল্যায়ন করুন এবং সেরা মডেল নির্বাচন করুন</p>
-        </header>
-        
-        <div class="app-container">
-            <div class="input-section">
-                <h2 class="section-title"><i class="fas fa-cog"></i> এসি স্পেসিফিকেশন ইনপুট করুন</h2>
-                <div class="form-grid">
-                    <div class="form-group">
-                        <label for="model-name">এসি মডেলের নাম</label>
-                        <input type="text" id="model-name" placeholder="উদাহরণ: ডাইকিন FTKM সিরিজ">
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="iseer">ISEER রেটিং</label>
-                        <input type="number" id="iseer" step="0.1" placeholder="উদাহরণ: 5.0">
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="modulation">সর্বনিম্ন স্পিড মডুলেশন (%)</label>
-                        <input type="number" id="modulation" placeholder="উদাহরণ: 10">
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="noise">শব্দের মাত্রা (ডেসিবেল)</label>
-                        <input type="number" id="noise" placeholder="উদাহরণ: 19">
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="humidity">আর্দ্রতা নিয়ন্ত্রণ</label>
-                        <select id="humidity">
-                            <option value="100">স্মার্ট অটো ডিহিউমিডিফিকেশন</option>
-                            <option value="50">বেসিক কন্ট্রোল</option>
-                            <option value="20">কোনো নেই</option>
-                        </select>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="warranty">ওয়ারেন্টি (বছর)</label>
-                        <input type="number" id="warranty" placeholder="উদাহরণ: 5">
-                    </div>
-                </div>
-                
-                <div class="button-group">
-                    <button class="btn-primary" id="analyze-btn">
-                        <i class="fas fa-chart-bar"></i> কর্মক্ষমতা বিশ্লেষণ করুন
-                    </button>
-                    <button class="btn-secondary" id="save-btn">
-                        <i class="fas fa-save"></i> মডেল সংরক্ষণ করুন
-                    </button>
-                    <button class="btn-secondary" id="load-btn">
-                        <i class="fas fa-folder-open"></i> সংরক্ষিত মডেল
-                    </button>
-                </div>
+      <header>
+        <span
+          >created by...(<a
+            style="color: rgb(184, 115, 248)"
+            href="https://facebook.com/mustafa24hours"
+            >Mustafa Rahman</a
+          >)
+        </span>
+        <h1>এসি পারফরম্যান্স বিশ্লেষক</h1>
+        <p class="subtitle">
+          আপনার এসির কর্মক্ষমতা মূল্যায়ন করুন এবং সেরা মডেল নির্বাচন করুন
+        </p>
+      </header>
+
+      <div class="app-container">
+        <div class="input-section">
+          <h2 class="section-title">
+            <i class="fas fa-cog"></i> এসি স্পেসিফিকেশন ইনপুট করুন
+          </h2>
+          <div class="form-grid">
+            <div class="form-group">
+              <label for="model-name">এসি মডেলের নাম</label>
+              <input
+                type="text"
+                id="model-name"
+                placeholder="উদাহরণ: ডাইকিন FTKM সিরিজ"
+              />
             </div>
-            
-            <div id="results-section" class="hidden">
-                <div class="dashboard">
-                    <div class="card">
-                        <h3 class="card-title"><i class="fas fa-bolt"></i> শক্তি দক্ষতা</h3>
-                        <div class="progress-container">
-                            <div class="progress-label">
-                                <span>ISEER রেটিং</span>
-                                <span class="score" id="iseer-score">0%</span>
-                            </div>
-                            <div class="progress-bar">
-                                <div class="progress-fill" id="iseer-fill" style="width: 0%"></div>
-                            </div>
-                        </div>
-                        <div class="status-indicator" id="iseer-status">
-                            <div class="status-dot"></div>
-                            <span>মূল্যায়ন করা হয়নি</span>
-                        </div>
-                        <p class="card-description">উচ্চ ISEER রেটিং = কম বিদ্যুৎ বিল</p>
-                    </div>
-                    
-                    <div class="card">
-                        <h3 class="card-title"><i class="fas fa-thermometer-half"></i> তাপমাত্রা স্থিতিশীলতা</h3>
-                        <div class="progress-container">
-                            <div class="progress-label">
-                                <span>±°C তারতম্য</span>
-                                <span class="score" id="temp-score">0%</span>
-                            </div>
-                            <div class="progress-bar">
-                                <div class="progress-fill" id="temp-fill" style="width: 0%"></div>
-                            </div>
-                        </div>
-                        <div class="status-indicator" id="temp-status">
-                            <div class="status-dot"></div>
-                            <span>মূল্যায়ন করা হয়নি</span>
-                        </div>
-                        <p class="card-description">কম তারতম্য = আরও সামঞ্জস্যপূর্ণ শীতলতা</p>
-                    </div>
-                    
-                    <div class="card">
-                        <h3 class="card-title"><i class="fas fa-tint"></i> আর্দ্রতা নিয়ন্ত্রণ</h3>
-                        <div class="progress-container">
-                            <div class="progress-label">
-                                <span>কার্যকারিতা</span>
-                                <span class="score" id="humidity-score">0%</span>
-                            </div>
-                            <div class="progress-bar">
-                                <div class="progress-fill" id="humidity-fill" style="width: 0%"></div>
-                            </div>
-                        </div>
-                        <div class="status-indicator" id="humidity-status">
-                            <div class="status-dot"></div>
-                            <span>মূল্যায়ন করা হয়নি</span>
-                        </div>
-                        <p class="card-description">ভাল নিয়ন্ত্রণ = আর্দ্র আবহাওয়ায় আরামদায়ক</p>
-                    </div>
-                    
-                    <div class="card">
-                        <h3 class="card-title"><i class="fas fa-cogs"></i> কম্প্রেসর কর্মক্ষমতা</h3>
-                        <div class="progress-container">
-                            <div class="progress-label">
-                                <span>সর্বনিম্ন স্পিড মডুলেশন</span>
-                                <span class="score" id="compressor-score">0%</span>
-                            </div>
-                            <div class="progress-bar">
-                                <div class="progress-fill" id="compressor-fill" style="width: 0%"></div>
-                            </div>
-                        </div>
-                        <div class="status-indicator" id="compressor-status">
-                            <div class="status-dot"></div>
-                            <span>মূল্যায়ন করা হয়নি</span>
-                        </div>
-                        <p class="card-description">কম % = তাপমাত্রা স্থিতিশীলতা ভাল</p>
-                    </div>
-                    
-                    <div class="card">
-                        <h3 class="card-title"><i class="fas fa-volume-down"></i> শব্দের মাত্রা</h3>
-                        <div class="progress-container">
-                            <div class="progress-label">
-                                <span>ডেসিবেল (dB)</span>
-                                <span class="score" id="noise-score">0%</span>
-                            </div>
-                            <div class="progress-bar">
-                                <div class="progress-fill" id="noise-fill" style="width: 0%"></div>
-                            </div>
-                        </div>
-                        <div class="status-indicator" id="noise-status">
-                            <div class="status-dot"></div>
-                            <span>মূল্যায়ন করা হয়নি</span>
-                        </div>
-                        <p class="card-description">কম dB = আরও শান্ত অপারেশন</p>
-                    </div>
-                    
-                    <div class="card">
-                        <h3 class="card-title"><i class="fas fa-shield-alt"></i> ওয়ারেন্টি</h3>
-                        <div class="progress-container">
-                            <div class="progress-label">
-                                <span>মেয়াদ (বছর)</span>
-                                <span class="score" id="warranty-score">0%</span>
-                            </div>
-                            <div class="progress-bar">
-                                <div class="progress-fill" id="warranty-fill" style="width: 0%"></div>
-                            </div>
-                        </div>
-                        <div class="status-indicator" id="warranty-status">
-                            <div class="status-dot"></div>
-                            <span>মূল্যায়ন করা হয়নি</span>
-                        </div>
-                        <p class="card-description">দীর্ঘ ওয়ারেন্টি = ব্র্যান্ডের আত্মবিশ্বাস</p>
-                    </div>
-                    
-                    <div class="card overall-score-card">
-                        <h3 class="card-title"><i class="fas fa-star"></i> সামগ্রিক স্কোর</h3>
-                        <div class="score-circle" id="overall-score-circle">
-                            <span id="overall-score">0%</span>
-                        </div>
-                        <div class="status-indicator" id="overall-status">
-                            <div class="status-dot"></div>
-                            <span>মূল্যায়ন করা হয়নি</span>
-                        </div>
-                        <p class="card-description">সমস্ত প্যারামিটারের ওজনযুক্ত গড়ের উপর ভিত্তি করে</p>
-                    </div>
-                </div>
-                
-                <div class="comparison-section">
-                    <h2 class="section-title"><i class="fas fa-exchange-alt"></i> প্রস্তাবিত মডেল তুলনা</h2>
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>মডেল</th>
-                                <th>ISEER</th>
-                                <th>মডুলেশন</th>
-                                <th>শব্দ</th>
-                                <th>স্কোর</th>
-                            </tr>
-                        </thead>
-                        <tbody id="comparison-table">
-                            <!-- Will be populated by JavaScript -->
-                        </tbody>
-                    </table>
-                </div>
+
+            <div class="form-group">
+              <label for="iseer">ISEER রেটিং (কম হলে বিদ্যুত সাশ্রয়ী)</label>
+              <input
+                type="number"
+                id="iseer"
+                step="0.1"
+                placeholder="উদাহরণ: 5.0"
+              />
             </div>
-            
-            <div id="saved-models-section" class="hidden saved-models">
-                <h2 class="section-title"><i class="fas fa-bookmark"></i> সংরক্ষিত মডেল</h2>
-                <div id="saved-models-list">
-                    <!-- Will be populated by JavaScript -->
-                </div>
+
+            <div class="form-group">
+              <label for="modulation">সর্বনিম্ন স্পিড মডুলেশন %</label>
+              <input
+                type="number"
+                id="modulation"
+                placeholder="উদাহরণ: 10-15 good range"
+              />
             </div>
+
+            <div class="form-group">
+              <label for="noise">শব্দের মাত্রা (ডেসিবেল)</label>
+              <input type="number" id="noise" placeholder="উদাহরণ: 19" />
+            </div>
+
+            <div class="form-group">
+              <label for="humidity">আর্দ্রতা নিয়ন্ত্রণ</label>
+              <select id="humidity">
+                <option value="100">স্মার্ট অটো ডিহিউমিডিফিকেশন</option>
+                <option value="50">বেসিক কন্ট্রোল</option>
+                <option value="20">কোন বাড়তি ফিচার নেই</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="warranty">ওয়ারেন্টি (বছর)</label>
+              <input type="number" id="warranty" placeholder="উদাহরণ: 5" />
+            </div>
+          </div>
+
+          <div class="button-group">
+            <button class="btn-primary" id="analyze-btn">
+              <i class="fas fa-chart-bar"></i> কর্মক্ষমতা বিশ্লেষণ করুন
+            </button>
+            <button class="btn-secondary" id="save-btn">
+              <i class="fas fa-save"></i> মডেল সংরক্ষণ করুন
+            </button>
+            <button class="btn-secondary" id="load-btn">
+              <i class="fas fa-folder-open"></i> সংরক্ষিত মডেল
+            </button>
+          </div>
         </div>
+
+        <div id="results-section" class="hidden">
+          <div class="dashboard">
+            <div class="card">
+              <h3 class="card-title">
+                <i class="fas fa-bolt"></i> শক্তি দক্ষতা
+              </h3>
+              <div class="progress-container">
+                <div class="progress-label">
+                  <span>ISEER রেটিং </span>
+                  <span class="score" id="iseer-score">0%</span>
+                </div>
+                <div class="progress-bar">
+                  <div
+                    class="progress-fill"
+                    id="iseer-fill"
+                    style="width: 0%"
+                  ></div>
+                </div>
+              </div>
+              <div class="status-indicator" id="iseer-status">
+                <div class="status-dot"></div>
+                <span>মূল্যায়ন করা হয়নি</span>
+              </div>
+              <p class="card-description">উচ্চ ISEER রেটিং = কম বিদ্যুৎ বিল</p>
+            </div>
+
+            <div class="card">
+              <h3 class="card-title">
+                <i class="fas fa-thermometer-half"></i> তাপমাত্রা স্থিতিশীলতা
+              </h3>
+              <div class="progress-container">
+                <div class="progress-label">
+                  <span>±°C তারতম্য</span>
+                  <span class="score" id="temp-score">0%</span>
+                </div>
+                <div class="progress-bar">
+                  <div
+                    class="progress-fill"
+                    id="temp-fill"
+                    style="width: 0%"
+                  ></div>
+                </div>
+              </div>
+              <div class="status-indicator" id="temp-status">
+                <div class="status-dot"></div>
+                <span>মূল্যায়ন করা হয়নি</span>
+              </div>
+              <p class="card-description">
+                কম তারতম্য = আরও সামঞ্জস্যপূর্ণ শীতলতা
+              </p>
+            </div>
+
+            <div class="card">
+              <h3 class="card-title">
+                <i class="fas fa-tint"></i> আর্দ্রতা নিয়ন্ত্রণ
+              </h3>
+              <div class="progress-container">
+                <div class="progress-label">
+                  <span>কার্যকারিতা</span>
+                  <span class="score" id="humidity-score">0%</span>
+                </div>
+                <div class="progress-bar">
+                  <div
+                    class="progress-fill"
+                    id="humidity-fill"
+                    style="width: 0%"
+                  ></div>
+                </div>
+              </div>
+              <div class="status-indicator" id="humidity-status">
+                <div class="status-dot"></div>
+                <span>মূল্যায়ন করা হয়নি</span>
+              </div>
+              <p class="card-description">
+                ভাল নিয়ন্ত্রণ = আর্দ্র আবহাওয়ায় আরামদায়ক
+              </p>
+            </div>
+
+            <div class="card">
+              <h3 class="card-title">
+                <i class="fas fa-cogs"></i> কম্প্রেসর কর্মক্ষমতা
+              </h3>
+              <div class="progress-container">
+                <div class="progress-label">
+                  <span>সর্বনিম্ন স্পিড মডুলেশন</span>
+                  <span class="score" id="compressor-score">0%</span>
+                </div>
+                <div class="progress-bar">
+                  <div
+                    class="progress-fill"
+                    id="compressor-fill"
+                    style="width: 0%"
+                  ></div>
+                </div>
+              </div>
+              <div class="status-indicator" id="compressor-status">
+                <div class="status-dot"></div>
+                <span>মূল্যায়ন করা হয়নি</span>
+              </div>
+              <p class="card-description">কম % = তাপমাত্রা স্থিতিশীলতা ভাল</p>
+            </div>
+
+            <div class="card">
+              <h3 class="card-title">
+                <i class="fas fa-volume-down"></i> শব্দের মাত্রা
+              </h3>
+              <div class="progress-container">
+                <div class="progress-label">
+                  <span>ডেসিবেল (dB)</span>
+                  <span class="score" id="noise-score">0%</span>
+                </div>
+                <div class="progress-bar">
+                  <div
+                    class="progress-fill"
+                    id="noise-fill"
+                    style="width: 0%"
+                  ></div>
+                </div>
+              </div>
+              <div class="status-indicator" id="noise-status">
+                <div class="status-dot"></div>
+                <span>মূল্যায়ন করা হয়নি</span>
+              </div>
+              <p class="card-description">কম dB = আরও শান্ত অপারেশন</p>
+            </div>
+
+            <div class="card">
+              <h3 class="card-title">
+                <i class="fas fa-shield-alt"></i> ওয়ারেন্টি
+              </h3>
+              <div class="progress-container">
+                <div class="progress-label">
+                  <span>মেয়াদ (বছর)</span>
+                  <span class="score" id="warranty-score">0%</span>
+                </div>
+                <div class="progress-bar">
+                  <div
+                    class="progress-fill"
+                    id="warranty-fill"
+                    style="width: 0%"
+                  ></div>
+                </div>
+              </div>
+              <div class="status-indicator" id="warranty-status">
+                <div class="status-dot"></div>
+                <span>মূল্যায়ন করা হয়নি</span>
+              </div>
+              <p class="card-description">
+                দীর্ঘ ওয়ারেন্টি = ব্র্যান্ডের আত্মবিশ্বাস
+              </p>
+            </div>
+
+            <div class="card overall-score-card">
+              <h3 class="card-title">
+                <i class="fas fa-star"></i> সামগ্রিক স্কোর
+              </h3>
+              <div class="score-circle" id="overall-score-circle">
+                <span id="overall-score">0%</span>
+              </div>
+              <div class="status-indicator" id="overall-status">
+                <div class="status-dot"></div>
+                <span>মূল্যায়ন করা হয়নি</span>
+              </div>
+              <p class="card-description">
+                সমস্ত প্যারামিটারের ওজনযুক্ত গড়ের উপর ভিত্তি করে
+              </p>
+            </div>
+          </div>
+
+          <div class="comparison-section">
+            <h2 class="section-title">
+              <i class="fas fa-exchange-alt"></i> প্রস্তাবিত মডেল তুলনা
+            </h2>
+            <table>
+              <thead>
+                <tr>
+                  <th>মডেল</th>
+                  <th>ISEER</th>
+                  <th>মডুলেশন</th>
+                  <th>শব্দ</th>
+                  <th>স্কোর</th>
+                </tr>
+              </thead>
+              <tbody id="comparison-table">
+                <!-- Will be populated by JavaScript -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div id="saved-models-section" class="hidden saved-models">
+          <h2 class="section-title">
+            <i class="fas fa-bookmark"></i> সংরক্ষিত মডেল
+          </h2>
+          <div id="saved-models-list">
+            <!-- Will be populated by JavaScript -->
+          </div>
+        </div>
+      </div>
     </div>
 
-
     <script src="./script.js"></script>
-  
-</body>
+  </body>
 </html>

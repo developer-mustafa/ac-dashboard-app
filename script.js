@@ -325,8 +325,6 @@ function deleteModel(index) {
 
 
 
-
-
 // Make functions available globally
 window.loadModel = loadModel;
 window.deleteModel = deleteModel;
